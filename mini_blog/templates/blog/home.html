@@ -1,0 +1,21 @@
+<html lang="ru">
+
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <title>Базовая разметка HTML</title>
+        <link rel="stylesheet" href="{%static 'blog/css/home.css' %}">
+    </head>
+
+    <body>
+        <div class="post">
+            {% for eliment in getting_data %}
+                <h1><a href="{{eliment.id}}"{{ eliment.post_title }}</a></h1>
+                <img src='{{eliment.image_post.url}}'>
+                <p>{{eliment.publication_text}}</p>
+                <p>{{eliment.author_name}}</p>
+            {% endfor %}
+        </div>
+    </body>
+
+</html>

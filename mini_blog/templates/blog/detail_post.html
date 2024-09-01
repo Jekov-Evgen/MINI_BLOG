@@ -1,0 +1,63 @@
+<html lang="ru">
+
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <title>Базовая разметка HTML</title>
+        <link rel="stylesheet" href="{%static 'blog/css/detail.css' %}">
+    </head>
+
+    <body>
+        <div class="post">
+                <h1>{{ getting_data.post_title }}</h1>
+                <img src='{{getting_data.image_post.url}}'>
+                <p>{{getting_data.publication_text}}</p>
+                <p>{{getting_data.author_name}}</p>
+
+                <div>
+                    <br>
+                    <p>Понравилось: {{getting_data.like_set.all.count}}</p>
+                    <br>
+                    <a href="{% url "add_like" getting_data.id %}">Нравится</a>
+                    <a href="{% url "del_like" getting_data.id %}">Не нравится</a>
+                </div>
+
+                <div>
+                    <form action="{% url "add_comment" getting_data.id %}", method="post">
+                        {% csrf_token %}
+
+                        <div>
+                            <label>Введите све имя *</label>
+                            <input type="text" name="name">
+                        </div>
+                        
+                        <div>
+                            <label>Введите email</label>
+                            <input type="email" name="email">
+                        </div>
+                        
+                        <div>
+                            <label>Введите текст коментария</label>
+                            <textarea name="text_comment"></textarea>
+                        </div>
+                        
+                        <div>
+                            <input type="submit">
+                        </div>
+                    </form>
+                </div>
+
+                <div>
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <h4>{{ comment.name }}</h4>
+                            <p>{{ comment.text_comment }}</p>
+                        </div>
+                    {% empty %}
+                        <p>Комментариев пока нет.</p>
+                    {% endfor %}
+                </div>
+        </div>
+    </body>
+
+</html>
